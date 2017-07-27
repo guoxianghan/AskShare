@@ -11,7 +11,7 @@ import app.views
 
 # Uncomment the next lines to enable the admin:
 # from django.conf.urls import include
-# from django.contrib import admin
+from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = [
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
+    url(r'^admin/', admin.site.urls),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
