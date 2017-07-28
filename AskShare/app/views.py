@@ -49,3 +49,19 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+def register(request):
+    """Renders the about page."""
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/account/register.html',
+        {
+             'title':'http://localhost:60122/',
+        }
+    )
+def register_post(request):
+    assert isinstance(request,HttpRequest)
+    ctx = {}
+    if request.POST:
+        ctx['rlt'] = request.POST['q']
+    return render(request, "post.html", ctx)

@@ -19,7 +19,9 @@ urlpatterns = [
     url(r'^$', app.views.home, name='home'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
+    url(r'^register/',app.views.register, name="register"),
     url(r'^admin/', admin.site.urls),
+    url(r'register_post/',app.views.register,name="register_post"),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
