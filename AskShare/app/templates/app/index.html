@@ -1,62 +1,15 @@
-﻿{% extends "app/layout.html" %}
+{% extends "app/layout.html" %}
 
-{% block content %}
-
- <nav class="navbar navbar-default" role="navigation">
-	<div class="container-fluid">
-	 
-	<div>
-		<ul class="nav navbar-nav">
-			<li><a href="/login/">全部问答</a></li>
-			<li><a href="#">未解决</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-					已解决
-					<b class="caret"></b>
-				</a>
-				<ul class="dropdown-menu">
-					<li><a href="#">jmeter</a></li>
-					<li><a href="#">EJB</a></li>
-					<li><a href="#">Jasper Report</a></li>
-					<li class="divider"></li>
-					<li><a href="#">分离的链接</a></li>
-					<li class="divider"></li>
-					<li><a href="#">另一个分离的链接</a></li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-	</div>
-</nav>
-<div style="height:100px;background-color:brown;border-radius:5px;"> 
-<dl> 
-    <dt>css网站</dt> 
-    <dd>网址为www.divcss5.com</dd> 
-    
-</dl> 
-   <dl>
-<dt>div css网站</dt> 
-    <dd>网址为www.divcss5.com</dd> 
-       </dl>
-    <dl>
-    <dt>div+css网站</dt> 
-    <dd>网址为www.divcss5.com</dd> </dl>
-</div>
- <div class="jumbotron" style="height:200px;background-color:azure">
- {% for i in arr %}
-       <p> {{ i }}</p>
-    {% empty %}
-    <li>抱歉，目前还没有文章。</li>
-    {% endfor %}
- </div>
-<div class="jumbotron">
+{#{% block content %}#}
+ 
+{#<div class="jumbotron">
  
     <h1>Django</h1>
     <p class="lead">Django is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="https://www.djangoproject.com/" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div>
+</div>#}
 
-<div class="row">
+{#<div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
         <p>
@@ -76,6 +29,6 @@
         <p>You can easily publish to Microsoft Azure using Visual Studio. Find out how you can host your application using a free trial today.</p>
         <p><a class="btn btn-default" href="http://azure.microsoft.com">Learn more &raquo;</a></p>
     </div>
-</div>
+</div>#}
 
-{% endblock %}
+{#{% endblock %}#}
