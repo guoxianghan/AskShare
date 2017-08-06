@@ -7,86 +7,137 @@
 <link rel="stylesheet" type="text/css" href="{% static 'app/resources/styles/clicki.web.css'%}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static 'app/resources/styles/clicki.loginandreg.css'%}" media="screen" />
 <link rel="stylesheet" type="text/css" href="{% static 'app/resources/styles/clicki.webkitanimation.css'%}" media="screen" />
+    <script type="application/javascript" src="{% static 'app/js/jquery-1.8.3.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'app/js/jquery.validate.min.js' %}"></script>
+    <script type="application/javascript" src="{% static 'app/js/messages_zh.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/style.css'%}" media="screen" />
 <title>注册AskShare账号</title>
-<!--[if lte IE 9 ]><link rel="stylesheet" href="{% static 'app/resources/styles/clicki.iehotfix.css?V=20120501'%}" /><![endif]-->
-<!--[if lte IE 9]>
-<style>
-body {background:#2f7fb2 url(resources/styles/images/topbg_01.png?V=20120501) top center no-repeat;}
-html{height:100%;overflow:hidden;background:#2f7fb2 url(resources/styles/images/topbg_01.png?V=20120501) top center no-repeat;}
-</style>
-<![endif]-->
+ <style>
+     .nocode {
+	display: inline-block;
+    width: 100px;
+    height: 25px;
+}
+
+.code {
+	display: inline-block;
+    color: #ff0000;
+    font-family: Tahoma, Geneva, sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    text-align: center;
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    border:1px solid #e2b4a2;
+    background: #e2b4a2;
+}
+
+.input {
+    width: 100px;
+}
+ </style>
     <script>
-        　$(function () {
-        $('form').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                username: {
-                    message: '用户名验证失败',
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 18,
-                            message: '用户名长度必须在6到18位之间'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '用户名只能包含大写、小写、数字和下划线'
+     $(function () {
+        function refresh_check_code(ths) {
+             alert("验证码"); ths.src += '?';
+         }
+        $("#leftForm").validate({
+                    submitHandler: function(form){   //表单提交句柄,为一回调函数，带一个参数：form
+                        if($("#password").val()==$("#password2").val())
+                        {
+                            alert("密码一致:"+$("#password").val());
                         }
-                    }
+                        else
+                        {
+                            alert("密码不一致");
+                        }
+
+                            alert($(".input").val() +';'+ $.session.get('number'));
+
+                    alert("提交表单");
+                    //form.submit();   //提交表单
                 },
-                email: {
-                    validators: {
-                        notEmpty: {
-                            message: '邮箱不能为空'
-                        },
-                        emailAddress: {
-                            message: '邮箱地址格式有误'
-                        }
+				rules:{
+					 email:{
+                        required:true,
+                        email:true
+                    },
+                firstname:{
+                        required:true,
+					    maxlength:12,
+                    minlength:4
+                },
+                    password:{
+                        required:true,
+					    maxlength:20,
+                    minlength:8
+                    },
+                    password2:{
+                        required:true,
+					    maxlength:20,
+                    minlength:8
                     }
-                }
-            }
-        });
-    });
+				},messages:{
+					email:{
+                        required:"请输入email地址",
+                        email:"E-Mail格式不正确"
+                    },
+                    firstname:{
+                        //required:true,
+                        required:"请输入First Name",
+                    },
+                    password:{
+                        required:"密码不能为空"
+                    },
+                    password2:{
+                        required:"密码不能为空"
+                    }
+				}
+ });
+     });
+     $.validator.setDefaults({
+	     errorElement:'span'
+     });
     </script>
 </head>
 <body>
 
 <div class="theCenterBox" style="">
-  <style>
-.theCenterBox{width:670px; margin-top:100px;}
-</style>
+
   <div class="theLoginBox" style="width:657px">
     <div class="loginTxt">注册账号</div>
     <form id="leftForm" action="register_post" method="post">
          {% csrf_token %}
       <div class="theLoginArea" id="loginBox">
         <p style="position: relative;">
-          <label for="LoginForm_email">邮箱或手机号码(必填)：</label>
-          <input placeholder="请输入您的邮箱" name="LoginForm[email]" id="LoginForm_email" type="text" maxlength="255" />
-          <span>请输入您的邮箱或手机号码</span> </p>
+          <label for="LoginForm_email"><em>*</em>邮箱(必填)：</label>
+
+          <input placeholder="请输入您的邮箱" name="email" id="LoginForm_email"  />
+          <span>请输入您的邮箱</span> </p>
+          <div style="height: 50px;">
+              <span id="code" class="nocode">验证码</span> <input type="text" class="input" />
+               {% load static %}
+              <script src="{% static 'app/js/code.js' %}"type="application/javascript" ></script>
+              <img id="check_code_img" src="{% url 'create_code_img' %}" onclick="refresh_check_code(this)">
+          </div>
           <p style="position: relative;">
-          <label for="LoginForm_checksum">First Name：</label>
-          <input placeholder="First Name" name="LoginForm[checksum]" id="LoginForm_checksum" type="text" value="" />
+          <label for="LoginForm_checksum"><em>*</em>First Name：</label>
+          <input placeholder="First Name" name="firstname" id="firstname" type="text" value="" />
           <span>First Name</span> </p>
           <p style="position: relative;">
           <label for="LoginForm_checksum">Last Name：</label>
-          <input placeholder="Last Name" name="LoginForm[checksum]" id="LoginForm_checksum" type="text" value="" />
+          <input placeholder="Last Name" name="lastname" id="lastname" type="text" value="" />
           <span>Last Name</span> </p>
         <p style="position: relative;">
-          <label for="LoginForm_password">密码：</label>
-          <input placeholder="请输入您的密码" name="LoginForm[password]" id="LoginForm_password" type="password" maxlength="16" />
+          <label for="LoginForm_password"><em>*</em>密码：</label>
+          <input placeholder="请输入您的密码" name="password" id="password" type="password" maxlength="16" />
           <span>请输入您的密码</span> </p>
         <p style="position: relative;">
-          <label for="LoginForm_checksum">确认密码：</label>
-          <input placeholder="确认密码" name="LoginForm[password]" id="LoginForm_password2" type="password" maxlength="16" />
+          <label for="LoginForm_checksum"><em>*</em>确认密码：</label>
+          <input placeholder="确认密码" name="password2" id="password2" type="password" maxlength="16" />
+
           <span>确认密码</span> </p>
         <div class="loginSubmitBnt">
           <div class="reg_submit">

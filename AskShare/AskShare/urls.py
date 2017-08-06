@@ -3,9 +3,8 @@ Definition of urls for DjangoWebProject1.
 """
 
 from datetime import datetime
-from django.conf.urls import url
 import django.contrib.auth.views
-
+from django.conf.urls import include, url
 import app.forms
 import app.views
 
@@ -22,6 +21,8 @@ urlpatterns = [
     url(r'^register/',app.views.register, name="register"),
     url(r'^admin/', admin.site.urls),
     url(r'register_post/',app.views.register,name="register_post"),
+    url(r'create_code_img/',app.views.create_code_img,name="create_code_img"),
+    url(r'^captcha/',include('captcha.urls')),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
